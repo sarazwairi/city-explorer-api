@@ -19,7 +19,7 @@ class ForCast {
     let getweather = req.query.city;
   
   let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${getweather}&key=${key}`;
-  console.log (url);
+  // console.log (url);
   axios
   .get(url)
     .then(found => {
