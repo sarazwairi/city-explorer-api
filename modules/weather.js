@@ -17,7 +17,6 @@ class ForCast {
   function weatherhandler(req, res) {
     let key = process.env.WEATHER_KEY;
     let getweather = req.query.city;
-  
   let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${getweather}&key=${key}`;
   console.log (url);
   axios

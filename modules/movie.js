@@ -16,25 +16,36 @@ class ForMovie{
       this.date=item.release_date;
     }
   }
-
+  let myMemory={};
 
   function moviehandler(req,res){
     let key=process.env.MOVIE_API_KEY;
     let city=req.query.city;
   
-        let url=`https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${city}`;
-  
-  
-  axios
-  .get(url)
-  .then(found=>{
-    const movieArr=found.data.results.map(element=>{
-      return new ForMovie(element);
-    })
-    res.send(movieArr);
-  })
+    if(myMemory[city] !== undefined)
+    {
+      console.log('memo');
 
-  .catch(err=>{
-    res.status(500).send(`{$err}`);
-  })
-  }
+      res.send(myMemory[city]);
+    }
+    else{
+      let url=`https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${city}`;
+  
+  
+      axios
+      .get(url)
+      .then(found=>{
+        const movieArr=found.data.results.map(element=>{
+          myMemory[city]=movieArr;
+          console.log('api');
+          return new ForMovie(element);
+        })
+        res.send(movieArr);
+      })
+    
+      .catch(err=>{
+        res.status(500).send(`{$err}`);
+      })
+      }
+    }
+    
